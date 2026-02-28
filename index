@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Get Well Soon ❤️</title>
+ <style>
+  :root{
+    /* LIGHT + PASTEL PINK AESTHETIC */
+    --bg:#fff7fb;
+    --bg2:#fff1f8;
+    --card: rgba(255,255,255,.72);
+    --stroke: rgba(255, 105, 180, .22);
+    --text:#241427;
+    --muted: rgba(36, 20, 39, .62);
+
+    --pink:#ff4fa5;
+    --pink2:#ff7fc8;
+    --violet:#8a63ff;
+    --cyan:#2fd3ff;
+    --good:#34d399;
+
+    --shadow: 0 18px 55px rgba(255,79,165,.14);
+    --shadow2: 0 12px 30px rgba(20, 10, 30, .08);
+    --r: 22px;
+  }
+
+  *{box-sizing:border-box}
+
+  body{
+    margin:0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    color:var(--text);
+    min-height:100vh;
+    overflow:hidden;
+
+    /* light blush background */
+    background:
+      radial-gradient(900px 650px at 12% 12%, rgba(255, 79, 165,.20) 0%, transparent 62%),
+      radial-gradient(900px 680px at 88% 18%, rgba(138, 99, 255,.14) 0%, transparent 60%),
+      radial-gradient(900px 700px at 50% 95%, rgba(255, 127, 200,.18) 0%, transparent 62%),
+      linear-gradient(180deg, var(--bg), var(--bg2));
+  }
+
+  /* make stars subtle for light theme */
+  canvas#stars{
+    position:fixed; inset:0; z-index:0;
+    opacity:.25;                 /* key change */
+    mix-blend-mode: multiply;     /* makes white dots softer */
+    filter: blur(.1px);
+  }
+
+  .wrap{
+    position:relative;
+    z-index:1;
+    width:min(980px, 92vw);
+    margin: 28px auto;
+    display:grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap:14px;
+    align-items:start;
+  }
+  @media (max-width: 920px){
+    body{overflow:auto}
+    .wrap{grid-template-columns:1fr; margin-bottom:56px}
+  }
+
+  .card{
+    border:1px solid var(--stroke);
+    background: var(--card);
+    border-radius:var(--r);
+    padding:18px;
+    box-shadow: var(--shadow2);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    overflow:hidden;
+    position:relative;
+  }
+
+  /* soft pastel glow */
+  .card:before{
+    content:"";
+    position:absolute; inset:-2px;
+    background:
+      radial-gradient(520px 240px at 18% 18%, rgba(255, 79, 165,.16) 0%, transparent 60%),
+      radial-gradient(520px 260px at 88% 26%, rgba(138, 99, 255,.12) 0%, transparent 62%),
+      radial-gradient(620px 300px at 52% 110%, rgba(255, 127, 200,.14) 0%, transparent 66%);
+    pointer-events:none;
+  }
+  .card > *{position:relative; z-index:1}
+
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 12px;
+    border:1px solid rgba(255, 79, 165, .22);
+    border-radius:999px;
+    background: rgba(255,255,255,.72);
+    color:var(--muted);
+    font-size:12px;
+    width:fit-content;
+    box-shadow: 0 10px 24px rgba(255,79,165,.10);
+  }
+
+  h1{
+    margin:12px 0 10px;
+    font-size: clamp(30px, 3.8vw, 50px);
+    letter-spacing:-.02em;
+    line-height:1.06;
+  }
+
+  .sub{
+    margin:0;
+    color:var(--muted);
+    line-height:1.55;
+    font-size:14px;
+    max-width:64ch;
+  }
+
+  .big{
+    margin:14px 0 0;
+    font-size: clamp(16px, 2vw, 20px);
+    line-height:1.55;
+  }
+
+  .name{
+    display:inline-block;
+    padding:3px 10px;
+    border-radius:999px;
+    border:1px solid rgba(255,79,165,.22);
+    background: rgba(255,79,165,.08);
+  }
+
+  .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+
+  button{
+    cursor:pointer;
+    border:1px solid rgba(255,79,165,.22);
+    background: rgba(255,255,255,.78);
+    color:var(--text);
+    border-radius:999px;
+    padding:10px 12px;
+    font-weight:800;
+    font-size:13px;
+    transition: transform .12s ease, border-color .2s ease, filter .2s ease;
+    box-shadow: 0 12px 26px rgba(20,10,30,.10);
+  }
+  button:hover{
+    transform: translateY(-1px);
+    border-color: rgba(255,79,165,.35);
+    filter: brightness(1.02);
+  }
+  button:active{ transform: translateY(0px) scale(.99); }
+
+  .primary{
+    border-color: rgba(255,79,165,.34);
+    background: linear-gradient(180deg, rgba(255,79,165,.20), rgba(138,99,255,.10));
+    box-shadow: var(--shadow);
+  }
+
+  .divider{height:1px; background: rgba(36,20,39,.10); margin:14px 0}
+
+  .quote{
+    border:1px solid rgba(255,79,165,.16);
+    background: rgba(255,255,255,.72);
+    border-radius:18px;
+    padding:12px 12px;
+    min-height:96px;
+    display:flex;
+    align-items:center;
+    line-height:1.55;
+    color:var(--text);
+    font-size:14px;
+    box-shadow: 0 10px 24px rgba(20,10,30,.06);
+  }
+  .quote small{color:var(--muted)}
+  .meta{margin-top:8px; color:var(--muted); font-size:12px}
+
+  .meter{
+    border:1px solid rgba(255,79,165,.16);
+    background: rgba(20,10,30,.06);
+    height:12px;
+    border-radius:999px;
+    overflow:hidden;
+  }
+  .fill{
+    height:100%;
+    width:0%;
+    border-radius:999px;
+    background: linear-gradient(90deg, var(--pink), var(--pink2), var(--violet), var(--cyan), var(--good));
+    transition: width .25s ease;
+  }
+
+  .pct{
+    font-variant-numeric: tabular-nums;
+    padding:8px 10px;
+    border-radius:14px;
+    border:1px solid rgba(255,79,165,.16);
+    background: rgba(255,255,255,.72);
+    min-width:92px;
+    text-align:center;
+    font-weight:900;
+    box-shadow: 0 10px 24px rgba(20,10,30,.06);
+  }
+
+  .heart{
+    position:fixed;
+    left:0; top:0;
+    font-size:18px;
+    pointer-events:none;
+    z-index:9;
+    filter: drop-shadow(0 10px 16px rgba(255,79,165,.18));
+    animation: floatUp 1.2s ease forwards;
+  }
+  @keyframes floatUp{
+    0%{ transform: translate(var(--x), var(--y)) scale(.9); opacity:0; }
+    12%{ opacity:1; }
+    100%{ transform: translate(calc(var(--x) + var(--dx)), calc(var(--y) - 150px)) scale(1.25); opacity:0; }
+  }
+
+  .toast{
+    position:fixed;
+    left:50%;
+    bottom:22px;
+    transform:translateX(-50%);
+    padding:12px 14px;
+    border-radius:999px;
+    background: rgba(255,255,255,.84);
+    border:1px solid rgba(255,79,165,.18);
+    color:var(--text);
+    box-shadow: 0 18px 45px rgba(20,10,30,.14);
+    opacity:0;
+    pointer-events:none;
+    transition: opacity .2s ease, transform .2s ease;
+    z-index:10;
+    font-size:13px;
+    max-width:min(720px, 92vw);
+    text-align:center;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(-2px);
+  }
+
+  .modal{
+    position:fixed; inset:0;
+    background: rgba(20,10,30,.40);
+    display:none;
+    place-items:center;
+    z-index:20;
+    padding:16px;
+  }
+  .modal.show{display:grid}
+
+  .box{
+    width:min(640px, 92vw);
+    border-radius:22px;
+    border:1px solid rgba(255,79,165,.18);
+    background: rgba(255,255,255,.86);
+    box-shadow: 0 26px 80px rgba(20,10,30,.18);
+    padding:18px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .box h2{margin:0 0 10px 0}
+  .box p{margin:0 0 12px 0; color:var(--muted); line-height:1.55}
+
+  .footer{
+    margin-top:10px;
+    color:var(--muted);
+    font-size:12px;
+    text-align:center;
+    opacity:.9;
+  }
+
+  .auto{
+    display:inline-flex;
+    gap:8px;
+    align-items:center;
+    border-radius:999px;
+    border:1px solid rgba(255,79,165,.16);
+    background: rgba(255,255,255,.72);
+    padding:8px 10px;
+    color:var(--muted);
+    font-size:12px;
+    box-shadow: 0 10px 24px rgba(20,10,30,.06);
+  }
+</style>
+</head>
+
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="wrap">
+    <!-- Main -->
+    <section class="card">
+      <div class="badge">Open. Relax. Smile. That’s it ✨</div>
+      <h1>Hello <span class="name" id="nm">my love</span> — get well soon ❤️</h1>
+      <p class="sub" id="sub">
+        Just a soft reminder that you’re loved — heavily mere cutie.
+      </p>
+
+      <p class="big" id="bigLine">
+        If your body is tired, let it be. Healing is not productivity. Healing is the job.
+        I’m right here — quietly, consistently, and annoyingly caring.
+      </p>
+
+      <div class="divider"></div>
+
+      <div class="row">
+        <span class="auto">🫶 Auto-love mode: <b id="autoState" style="color:var(--text)">ON</b></span>
+        <button class="primary" id="btnHearts">Make it rain hearts</button>
+        <button id="btnSecret">Open the sweetest note</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3 style="margin:0 0 10px 0">A message that changes every few seconds</h3>
+      <div class="quote" id="quoteBox"></div>
+      <div class="meta" id="meta"></div>
+    </section>
+
+    <!-- Side -->
+    <aside class="card">
+      <h3 style="margin:0 0 10px 0">Love Tank (fills by itself)</h3>
+      <p class="sub" style="margin:0 0 12px 0">
+        You don’t need to do anything. It fills slowly, because healing is slow too.
+      </p>
+
+      <div class="row" style="align-items:center">
+        <div class="meter" style="flex:1"><div class="fill" id="fill"></div></div>
+        <div class="pct"><span id="pct">0</span>%</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3 style="margin:0 0 10px 0">Tiny comfort soundtrack</h3>
+      <p class="sub" style="margin:0 0 12px 0">
+        Tap once if you want a soft calm hum (phones block autoplay audio).
+      </p>
+      <div class="row">
+        <button class="primary" id="btnCalm">Turn on calm hum</button>
+        <button id="btnStop">Stop</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3 style="margin:0 0 10px 0">One last thing</h3>
+      <div class="quote">
+        <div>
+          <div style="font-weight:800; margin-bottom:6px">You’re not alone in this.</div>
+          <small>Even if you feel low, you’re still my favorite human.</small>
+        </div>
+      </div>
+
+      <div class="footer">
+        Tip: click anywhere for a tiny sparkle ✨
+      </div>
+    </aside>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="modal" id="modal">
+    <div class="box">
+      <h2>For you, only 💗</h2>
+      <p id="secretText">
+        I don’t need you at 100% to love you. I love you at 1%, 10%, and on the days you feel like nothing.
+        Rest. Heal. I’ll carry the extra weight and choi iska maltb ye bilkul nahi hai ki mi aapko mota kh rha hu .
+      </p>
+      <div class="row" style="justify-content:flex-end">
+        <button class="primary" id="close">Close</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const toastEl = $("toast");
+
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastEl._t);
+    toastEl._t = setTimeout(()=>toastEl.classList.remove("show"), 2100);
+  }
+
+  // ===== Customize ONCE inside code (optional) =====
+  // If you want her name without manual input, just change this:
+  const HER_NAME = "Adu"; // e.g. "Aditi"
+  $("nm").textContent = HER_NAME;
+
+  // ===== Quotes rotate automatically =====
+  const quotes = [
+    "You rest. I’ll handle the world. That’s the deal mere cutie pie.",
+    "If healing had a speed button, mai din bhar usi pe khada rhta.",
+    "Soft days are still progress. aap bhut aacha kr rhe ho choi.",
+    "I’m sending you garam garam tomato soup energy and extra patience.",
+    "Your smile is expensive. mai baniya hu pr still looks like an interesting opportunity to invest .",
+    "You’re allowed to be tired. mai budhape tak yahi baitha hu .",
+    "If you could see how loved you are, you’d heal super fast bacha .",
+    "Today’s agenda: breathe, blink, heal. That’s it mera kadu .",
+    "I wish I could take 100% of the discomfort.kuki apke upar wo suit nahi krta bilkul bhi  .",
+    "Your only job is to rest. My job is to love you quiety choi bina sir mei dard kre "
+  ];
+  const quoteBox = $("quoteBox");
+  const meta = $("meta");
+  let qi = 0;
+
+  function showQuote(){
+    const q = quotes[qi % quotes.length];
+    quoteBox.textContent = q;
+    meta.textContent = "Auto-playing comfort line " + ((qi % quotes.length)+1) + " / " + quotes.length;
+    qi++;
+  }
+  showQuote();
+  setInterval(showQuote, 4200);
+
+  // ===== Love tank fills by itself =====
+  const fill = $("fill");
+  const pct = $("pct");
+  let v = 0;
+  function setV(n){
+    v = Math.max(0, Math.min(100, n));
+    fill.style.width = v + "%";
+    pct.textContent = Math.round(v);
+    if(v === 100){
+      $("secretText").textContent =
+        "Unlocked: When you’re weak, I’ll be your strength. When you’re overwhelmed, I’ll be your calm. Heal up — I’m right here.";
+      $("modal").classList.add("show");
+      popHearts(16);
+      toast("Love tank full 💗");
+    }
+  }
+  setInterval(() => {
+    if(v < 100){
+      setV(v + (0.6 + Math.random()*0.8)); // slow fill
+    }
+  }, 650);
+
+  // ===== Hearts =====
+  function popHearts(n=12){
+    const heartChars = ["❤️","💖","💗","💓","💘","✨"];
+    for(let i=0;i<n;i++){
+      const el = document.createElement("div");
+      el.className = "heart";
+      el.textContent = heartChars[Math.floor(Math.random()*heartChars.length)];
+      const x = Math.random()*window.innerWidth;
+      const y = window.innerHeight - (Math.random()*120 + 10);
+      const dx = (Math.random()*140 - 70) + "px";
+      el.style.setProperty("--x", x + "px");
+      el.style.setProperty("--y", y + "px");
+      el.style.setProperty("--dx", dx);
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(), 1400);
+    }
+  }
+  $("btnHearts").addEventListener("click", ()=>{
+    popHearts(20);
+    toast("Delivered: love in bulk 💌");
+  });
+
+  // little sparkle on click anywhere
+  window.addEventListener("click", (e)=>{
+    if(e.target.tagName.toLowerCase() === "button") return;
+    popHearts(4);
+  });
+
+  // ===== Secret modal =====
+  const modal = $("modal");
+  $("btnSecret").addEventListener("click", ()=>{
+    modal.classList.add("show");
+    popHearts(10);
+  });
+  $("close").addEventListener("click", ()=>modal.classList.remove("show"));
+  modal.addEventListener("click", (e)=>{ if(e.target === modal) modal.classList.remove("show"); });
+
+  // ===== Calm hum (requires one tap) =====
+  let audioOn=false, ac=null, osc=null, gain=null, lfo=null, lfoGain=null;
+
+  function startCalm(){
+    if(audioOn) return;
+    ac = new (window.AudioContext || window.webkitAudioContext)();
+    osc = ac.createOscillator();
+    gain = ac.createGain();
+    lfo = ac.createOscillator();
+    lfoGain = ac.createGain();
+
+    osc.type="sine";
+    osc.frequency.value = 196; // soft hum
+    gain.gain.value = 0.0;
+
+    lfo.type="sine";
+    lfo.frequency.value = 0.12;
+    lfoGain.gain.value = 0.02;
+
+    lfo.connect(lfoGain);
+    lfoGain.connect(gain.gain);
+    osc.connect(gain);
+    gain.connect(ac.destination);
+
+    osc.start();
+    lfo.start();
+    gain.gain.setValueAtTime(0.0, ac.currentTime);
+    gain.gain.linearRampToValueAtTime(0.045, ac.currentTime + 0.8);
+
+    audioOn=true;
+    toast("Calm hum on 🌙");
+  }
+
+  function stopCalm(){
+    if(!audioOn) return;
+    try{
+      gain.gain.linearRampToValueAtTime(0.0, ac.currentTime + 0.35);
+      setTimeout(()=>{
+        osc?.stop?.(); lfo?.stop?.();
+        ac?.close?.();
+        ac=null; osc=null; gain=null; lfo=null; lfoGain=null;
+      }, 450);
+    }catch(e){}
+    audioOn=false;
+    toast("Calm hum off.");
+  }
+
+  $("btnCalm").addEventListener("click", ()=>startCalm());
+  $("btnStop").addEventListener("click", ()=>stopCalm());
+
+  // ===== Stars background =====
+  const canvas = $("stars");
+  const ctx = canvas.getContext("2d");
+  const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+  let W=0,H=0;
+
+  function resize(){
+    W = canvas.width = Math.floor(window.innerWidth * DPR);
+    H = canvas.height = Math.floor(window.innerHeight * DPR);
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  const stars = Array.from({length: 140}, ()=>({
+    x: Math.random()*W,
+    y: Math.random()*H,
+    r: (Math.random()*1.8 + 0.4)*DPR,
+    a: Math.random()*0.8 + 0.2,
+    vx: (Math.random()*0.26 - 0.13)*DPR,
+    vy: (Math.random()*0.22 - 0.11)*DPR
+  }));
+
+  function tick(){
+    ctx.clearRect(0,0,W,H);
+    for(const s of stars){
+      s.x += s.vx; s.y += s.vy;
+      if(s.x < -10) s.x = W+10;
+      if(s.x > W+10) s.x = -10;
+      if(s.y < -10) s.y = H+10;
+      if(s.y > H+10) s.y = -10;
+
+      ctx.globalAlpha = s.a;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fillStyle = "#ffffff";
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(tick);
+  }
+  tick();
+
+  // ===== First load magic =====
+  setTimeout(()=>{ popHearts(10); toast("Just open and relax 💗"); }, 600);
+})();
+</script>
+</body>
+</html>
